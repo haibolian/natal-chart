@@ -3,15 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "vant": "^3.4.8",
+    "vue": "^3.2.25",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.1",
-    "vite": "^2.9.5"
+    "vite": "^2.9.5",
+    "vite-plugin-style-import": "1.4.1"
   }
 }
