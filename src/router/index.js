@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Home from "@/views/Home.vue";
-import LifeChart from '@/views/life-chart/index.vue';
+import NatalChart from '@/views/natal-chart/index.vue';
 
 const routes = [
   {
@@ -13,8 +13,8 @@ const routes = [
     component: Home
   },
   {
-    path: '/life-chart',
-    component: LifeChart,
+    path: '/natal-chart',
+    component: NatalChart,
   }
 ]
 

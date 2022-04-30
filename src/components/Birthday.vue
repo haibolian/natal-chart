@@ -11,8 +11,8 @@
     </van-cell-group>
     <van-cell-group class="calc-button" inset>
       <van-cell>
-        <van-button type="primary" @click="calcLifeChart()" size="small">阳历计算</van-button>
-        <van-button type="primary" @click="calcLifeChart(true)" size="small">农历计算</van-button>
+        <van-button type="primary" @click="generateNatalChart()" size="small">阳历计算</van-button>
+        <van-button type="primary" @click="generateNatalChart(true)" size="small">农历计算</van-button>
       </van-cell>
     </van-cell-group>
     <van-popup position="bottom" v-model:show="showPicker">
@@ -51,7 +51,7 @@ const handleDateConfirm = ( value )=>{
 
 const router = useRouter()
 
-const calcLifeChart = (isLunar)=>{
+const generateNatalChart = (isLunar)=>{
   if(!birthday.value) return Dialog({ message: '请先选择出生日期' });
   const lunar = selectedDate.value
   if(!isLunar){
@@ -64,9 +64,9 @@ const calcLifeChart = (isLunar)=>{
     lunar.setDate(lDay)
   }
   const formatedDate = formatDate(lunar, '-', ':')
-  
+
   router.push({
-    path: '/life-chart',
+    path: '/natal-chart',
     query: {
       name: name.value,
       d: formatedDate.date,

@@ -5,7 +5,10 @@ import {
   CellGroup,
   DatetimePicker,
   Popup,
-  Dialog
+  Dialog,
+  Toast,
+  Grid,
+  GridItem
 } from "vant"
 
 function install(){
@@ -16,6 +19,9 @@ function install(){
   this.use(Popup)
   this.use(Cell)
   this.use(Dialog)
+  this.use(Toast)
+  this.use(Grid)
+  this.use(GridItem)
 
 }
 
