@@ -838,7 +838,9 @@ var lunarInfo = [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 
       */
  
       lunar2solar: function (y, m, d, isLeapMonth) { // 参数区间1900.1.31~2100.12.1
- 
+        y = Number(y)
+        m = Number(m)
+        d = Number(d)
         isLeapMonth = !!isLeapMonth
  
         if (isLeapMonth && (leapMonth !== m)) { return -1 }// 传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
@@ -915,3 +917,5 @@ var lunarInfo = [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 
 	
 	export default calendarFormatter
   
+  const lunar2solar = calendarFormatter.lunar2solar
+  export { lunar2solar, solar2lunar }

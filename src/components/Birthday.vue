@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import dateTransform from '@/utils/date-transform';
+import { solar2lunar } from '@/utils/date-transform';
 import { formatDate } from '@/utils/index';
 import { Dialog } from 'vant';
 import { ref } from 'vue';
@@ -58,7 +58,7 @@ const generateNatalChart = (isLunar)=>{
     const y = lunar.getFullYear()
     const m = lunar.getMonth() + 1
     const d = lunar.getDate()
-    const { lYear, lMonth, lDay } = dateTransform.solar2lunar(y, m, d); 
+    const { lYear, lMonth, lDay } = solar2lunar(y, m, d); 
     lunar.setFullYear(lYear)
     lunar.setMonth(lMonth)
     lunar.setDate(lDay)

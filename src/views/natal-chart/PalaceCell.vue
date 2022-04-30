@@ -1,6 +1,10 @@
 <template>
   <div :class="`natal-chart__palace natal-chart__palace__${ code }`">
+    {{ tiangan }}
     {{ dizhi }}
+    {{ isFate ? '命宫' : '' }}
+    {{ isBody ? '身宫' : '' }}
+    {{ name }}
   </div>
 </template>
 
@@ -8,7 +12,11 @@
 import { ref } from 'vue';
 const props = defineProps({
   code: String,
-  dizhi: String
+  dizhi: String,
+  tiangan: String,
+  isFate: Boolean,
+  isBody: Boolean,
+  name: String
 })
 </script>
 

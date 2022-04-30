@@ -1,12 +1,22 @@
 <template>
   <div :class="`natal-chart__center`">
-    中心位置
+    {{ name }}
+    {{ lunarDate }}
+    {{ numTime }}
+    {{ wuxingGame }}
   </div>
 </template>
 
 <script setup>
-
+const props = defineProps({
+  name: String,
+  lunarDate: String,
+  numTime: String,
+  lunarInfo: Object,
+  wuxingGame: String
+})
 </script>
+
 <style>
   .natal-chart__center {
     background-color: pink;

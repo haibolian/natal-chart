@@ -3,7 +3,7 @@
     <div class="natal-chart__body">
       <template v-for="palace in natalChart" key="palace.code">
         <PalaceCell v-bind="palace" />
-        <CenterCell v-if="palace.code == 'chen'"/>
+        <CenterCell v-bind="person" v-if="palace.code == 'chen'"/>
       </template>
     </div>
   </div>
@@ -13,11 +13,17 @@
 import CenterCell from './CenterCell.vue';
 import PalaceCell from './PalaceCell.vue';
 import useNatalChart from './hooks/useNatalChart';
+import { reactive, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const {
   natalChart,
-  natalChartMap
+  natalChartMap,
+  initPerson,
 } = useNatalChart
+
+const route = useRoute()
+const person = initPerson(route.query)
 
 </script>
 
