@@ -194,11 +194,30 @@ class Person {
     const palace = this.natalChartMap[tianma[this.dYear]]
     palace.addSmallStar({ name: '天马', code: 'tianma' })
   }
+  /**
+   * 
+   * @param { String } startPalaceCode 哪个地支开始
+   * @param { String } shichen 从什么开始
+   * @param { Boolean } direction 顺 / 逆 时针
+   * @param { String } targetShichen 到什么
+   * @returns { Palace } 返回目标宫位
+   * @example 亥起子时，逆时针到生时
+   * @todo 顺逆
+   */
+  getMovePalace(startPalaceCode, shichen, direction, targetShichen){
+    const startPalace = this.natalChartMap[startPalaceCode]
+    const shichenIndex = dizhi.findIndex(dz => dz === shichen)
+    const newArr = [ ...dizhi.slice(shichenIndex), ...dizhi.slice(0, shichenIndex) ]
+    const scIndex = newArr.findIndex(dz => dz === targetShichen)
+    const endPalace = this.#getPalace(startPalace.index + scIndex)
+    return endPalace
+  }
   setHuoxing(){
-    const startPalace = this.natalChartMap[huoxing[this.dYear]]
-    const shichenIndex = dizhi.findIndex(dz => dz === this.shichen)
-    const endPalace = this.#getPalace(startPalace.index + shichenIndex)
-    endPalace.addSmallStar({ name: '火星', code: 'huoxing' })
+    const palace = this.getMovePalace(huoxing[this.dYear], '子', true, this.shichen)
+    palace.addSmallStar({ name: '火星', code: 'huoxing' })
+    // const startPalace = this.natalChartMap[huoxing[this.dYear]]
+    // const shichenIndex = dizhi.findIndex(dz => dz === this.shichen)
+    // const endPalace = this.#getPalace(startPalace.index + shichenIndex)
   }
 
 }
