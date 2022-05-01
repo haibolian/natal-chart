@@ -188,6 +188,8 @@ class Person {
   setLucun(){
     const palace = this.natalChartMap[lucunRule[this.tYear]]
     palace.addSmallStar({ name: '禄存', code: 'lucun' })
+    palace.next.addSmallStar({ name: '擎羊', code: 'qingyang' })
+    palace.prev.addSmallStar({ name: '陀罗', code: 'tuoluo' })
   }
   setTianma(){
     const palace = this.natalChartMap[tianma[this.dYear]]
