@@ -78,6 +78,8 @@ class Person {
     this.natalChartMap = reactive({})
     this.natalChart.forEach( (item, index) => {
       this.natalChartMap[item.dizhiCode] = item
+      item.next = this.natalChart[index + 1 > 11 ? 0 : index + 1]
+      item.prev = this.natalChart[index - 1 < 0 ? 11 : index - 1]
     })
   }
 // 填充天干, next, prev
@@ -87,8 +89,6 @@ class Person {
     this.#fillOrder.forEach((dizhi, idx) => {
       const palace = this.natalChartMap[dizhi]
       palace.setTiangan(orderedTiangan[idx])
-      
-
     })
   }
   // 设置命宫
