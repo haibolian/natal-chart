@@ -8,6 +8,9 @@
     <div v-for="(star, index) in mainStars" :key="index">
      {{ star.name }}
     </div>
+    <div v-for="(star, index) in smallStars" :key="index">
+      {{ star.name }}
+    </div>
   </div>
 </template>
 
@@ -20,7 +23,8 @@ const props = defineProps({
   isFate: Boolean,
   isBody: Boolean,
   name: String,
-  mainStars: Array
+  mainStars: Array,
+  smallStars: Array
 })
 </script>
 

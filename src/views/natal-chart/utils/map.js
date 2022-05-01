@@ -1,4 +1,18 @@
-export const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+export const tiangan = [
+  { name: '甲', code: 'jia' },
+  { name: '乙', code: 'yi' },
+  { name: '丙', code: 'bing' },
+  { name: '丁', code: 'ding' },
+  { name: '戊', code: 'wu' },
+  { name: '己', code: 'ji' },
+  { name: '庚', code: 'geng' },
+  { name: '辛', code: 'xin' },
+  { name: '壬', code: 'ren' },
+  { name: '癸', code: 'gui' }
+]
+
+export const getTianganCode = name => tiangan.find(tg => tg.name === name)?.code
+
 export const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 
 export const dizhiChart = [
@@ -16,6 +30,10 @@ export const dizhiChart = [
   { dizhi: '亥', code: 'hai' }
 ]
 
+export const getDizhiCode = name => dizhiChart.find(dz => dz.dizhi === name)?.code
+
+
+
 export const palaceNames = [
   { name: '父母', code: 'fumu' },
   { name: '福德', code: 'fude' },
@@ -32,7 +50,7 @@ export const palaceNames = [
 
 export const wuxingGame = [
   { name: '金四局', num: 4 },
-  { name: '水一局', num: 1 },
+  { name: '水二局', num: 2 },
   { name: '火六局', num: 6 },
   { name: '土五局', num: 5 },
   { name: '木三局', num: 3 }
@@ -60,19 +78,18 @@ export const mainStarsWithTianfu = [
   { name: '七杀', code: 'lianzhen' },
   null, null, null,
   { name: '破军', code: 'lianzhen' },
-
 ]
 
 export function getYingongStartTiangan(year) {
   const endNum = year.toString().charAt(3)
   let name = null
   let index = null
-  if( endNum == '4' || endNum == '9' ) index = tiangan.findIndex(i => i === '丙')
-  if( endNum == '0' || endNum == '5' ) index = tiangan.findIndex(i => i === '戊')
-  if( endNum == '6' || endNum == '1' ) index = tiangan.findIndex(i => i === '庚')
-  if( endNum == '7' || endNum == '2' ) index = tiangan.findIndex(i => i === '壬')
-  if( endNum == '8' || endNum == '3' ) index = tiangan.findIndex(i => i === '甲')
-  name = tiangan[index]
+  if( endNum == '4' || endNum == '9' ) index = tiangan.findIndex(i => i.name === '丙')
+  if( endNum == '0' || endNum == '5' ) index = tiangan.findIndex(i => i.name === '戊')
+  if( endNum == '6' || endNum == '1' ) index = tiangan.findIndex(i => i.name === '庚')
+  if( endNum == '7' || endNum == '2' ) index = tiangan.findIndex(i => i.name === '壬')
+  if( endNum == '8' || endNum == '3' ) index = tiangan.findIndex(i => i.name === '甲')
+  name = tiangan[index].name
   return {
     name,
     index

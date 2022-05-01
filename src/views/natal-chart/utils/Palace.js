@@ -9,8 +9,9 @@ class Palace {
     this.mainStars = []
     this.smallStars = []
   }
-  setTiangan(tiangan){
-    this.tiangan = tiangan
+  setTiangan({ name, code }){
+    this.tiangan = name
+    this.tianganCode = code
   }
   setFatePalace(index){
     this.isFate = true
@@ -27,6 +28,9 @@ class Palace {
   }
   addMainStar(star){
     this.mainStars.unshift(star)
+  }
+  addSmallStar(star){
+    this.smallStars.unshift(star)
   }
 }
 

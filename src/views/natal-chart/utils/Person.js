@@ -1,14 +1,22 @@
 import { reactive } from 'vue';
 import { lunar2solar } from '@/utils/date-transform';
-import { tiangan,
+import {
+  tiangan,
   dizhi,
   dizhiChart,
   getShichen,
   palaceNames,
   wuxingGame,
   mainStarsWithZiwei,
-  mainStarsWithTianfu
+  mainStarsWithTianfu,
+  getTianganCode,
+  getDizhiCode
 } from '../utils/map';
+import {
+  lucunRule,
+  tianma,
+
+} from './rules';
 import { getYingongStartTiangan } from '../utils/map';
 import Palace from './Palace';
 class Person {
@@ -41,6 +49,9 @@ class Person {
     this.setWuxingGame()
     const zIndex = this.setZiweiStars()
     this.setTianfuStars(zIndex)
+    // 小星
+    this.setLucun()
+    this.setTianma()
   }
   // 生成农历信息
   generateLunarInfo(){
@@ -48,6 +59,9 @@ class Person {
     this.lunarInfo = lunar2solar(...date)
     this.lMonth = this.lunarInfo.lMonth
     this.lDay = this.lunarInfo.lDay
+    const [t, d] = this.lunarInfo.gzYear.split('')
+    this.tYear = getTianganCode(t)
+    this.dYear = getDizhiCode(d)
   }
   // 设置时辰
   setShichen(){
@@ -62,16 +76,19 @@ class Person {
       this.natalChart.push( new Palace(item) )
     })
     this.natalChartMap = reactive({})
-    this.natalChart.forEach( item => {
+    this.natalChart.forEach( (item, index) => {
       this.natalChartMap[item.dizhiCode] = item
     })
   }
-// 填充天干
+// 填充天干, next, prev
   fillTiangan(){
     const { name, index } = getYingongStartTiangan(this.lunarInfo.lYear)
     const orderedTiangan = [ ...tiangan.slice(index),  ...tiangan.slice(0, index + 2)];
     this.#fillOrder.forEach((dizhi, idx) => {
-      this.natalChartMap[dizhi].setTiangan(orderedTiangan[idx])
+      const palace = this.natalChartMap[dizhi]
+      palace.setTiangan(orderedTiangan[idx])
+      
+
     })
   }
   // 设置命宫
@@ -102,14 +119,15 @@ class Person {
       const palaceIndex = fatePalaceIndex + index + 1
       this.natalChartMap[dizhi]?.setPalaceName(palace, palaceIndex > 11 ? palaceIndex - 12 : palaceIndex)
       this.palaces[palace.code] = this.natalChartMap[dizhi]
+
     })
   }
   // 设置五行局
   setWuxingGame() {
     const fatePalaceName = this.#fillOrder[this.fatePalaceIndex]
     const { tiangan: t, dizhi: d } = this.natalChartMap[fatePalaceName]
-    const tIndex = tiangan.findIndex(name => t === name)
-    const dIndex = dizhi.findIndex( name => d === name )
+    const tIndex = tiangan.findIndex(tg => t === tg.name)
+    const dIndex = dizhi.findIndex( dz => d === dz )
     // 根据天干计算到某一个五行局
     const t2Index = parseInt(tIndex / 2)
     // 找出地支所需的剩下的连续三个五行局
@@ -166,8 +184,16 @@ class Person {
       palace.addMainStar(star)
       this.setStars2Palace(star.code, palace)
     })
-
   }
+  setLucun(){
+    const palace = this.natalChartMap[lucunRule[this.tYear]]
+    palace.addSmallStar({ name: '禄存', code: 'lucun' })
+  }
+  setTianma(){
+    const palace = this.natalChartMap[tianma[this.dYear]]
+    palace.addSmallStar({ name: '天马', code: 'tianma' })
+  }
+
 }
 
 export default Person
