@@ -18,16 +18,13 @@ const props = defineProps({
   lunarDate: String,
   numTime: String,
   lunarInfo: Object,
-  wuxingGame: String
+  wuxingGame: Object
 })
 </script>
 
 <style>
   .natal-chart__center {
     background-color: pink;
-    grid-column-start: 2;
-    grid-column-end: 4;
-    grid-row-start: 2;
-    grid-row-end: 4;
+    grid-area: center;
   }
 </style>

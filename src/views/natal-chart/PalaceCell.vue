@@ -1,5 +1,8 @@
 <template>
-  <div :class="`natal-chart__palace natal-chart__palace__${ code }`">
+  <div 
+    :class="`natal-chart__palace natal-chart__palace__${ dizhiCode }`"
+    :style="{ gridArea: dizhiCode }"
+  >
     {{ tiangan }}
     {{ dizhi }}
     {{ isFate ? '命宫' : '' }}
@@ -14,9 +17,15 @@
   </div>
 </template>
 
+<script>
+export default {
+  inheritAttrs: false
+}
+</script>
 <script setup>
 import { ref } from 'vue';
 const props = defineProps({
+  dizhiCode: String,
   code: String,
   dizhi: String,
   tiangan: String,

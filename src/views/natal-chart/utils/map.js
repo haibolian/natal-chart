@@ -16,18 +16,18 @@ export const getTianganCode = name => tiangan.find(tg => tg.name === name)?.code
 export const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 
 export const dizhiChart = [
+  { dizhi: '寅', code: 'yin' },
+  { dizhi: '卯', code: 'mao' },
+  { dizhi: '辰', code: 'chen' },
   { dizhi: '巳', code: 'si' },
   { dizhi: '午', code: 'wu' },
   { dizhi: '未', code: 'wei' },
   { dizhi: '申', code: 'shen' },
-  { dizhi: '辰', code: 'chen' },
   { dizhi: '酉', code: 'you' },
-  { dizhi: '卯', code: 'mao' },
   { dizhi: '戌', code: 'xu' },
-  { dizhi: '寅', code: 'yin' },
-  { dizhi: '丑', code: 'chou' },
+  { dizhi: '亥', code: 'hai' },
   { dizhi: '子', code: 'zi' },
-  { dizhi: '亥', code: 'hai' }
+  { dizhi: '丑', code: 'chou' },
 ]
 
 export const getDizhiCode = name => dizhiChart.find(dz => dz.dizhi === name)?.code

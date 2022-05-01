@@ -37,11 +37,10 @@ const { natalChart, natalChartMap } = person
   display: grid;
   grid-template-columns: repeat(4, 25%);
   gap: 0;
+  grid-template-areas: 'si wu wei shen'
+                       'chen center center you'
+                       'mao center center xu'
+                       'yin chou zi hai';
 }
-
-
-
-
-
 </style>
 
