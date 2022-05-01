@@ -25,3 +25,18 @@ export const tianma = {
   you: 'hai',
   chou: 'hai'
 }
+
+export const huoxing = {
+  yin: 'chou',
+  wu: 'chou',
+  xu: 'chou',
+  shen: 'yin',
+  zi: 'yin',
+  chen: 'yin',
+  si: 'mao',
+  you: 'mao',
+  chou: 'mao',
+  hai: 'you',
+  mao: 'you',
+  wei: 'you'
+}

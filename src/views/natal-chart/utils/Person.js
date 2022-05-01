@@ -15,19 +15,19 @@ import {
 import {
   lucunRule,
   tianma,
-
+  huoxing
 } from './rules';
 import { getYingongStartTiangan } from '../utils/map';
 import Palace from './Palace';
 class Person {
   #fillOrder = ['yin', 'mao', 'chen', 'si', 'wu', 'wei', 'shen', 'you', 'xu', 'hai', 'zi', 'chou']
-  #getFillOrder = function(index){
+  #getPalace = function(index){
     if(index < 0) {
-      return this.#fillOrder[index + 12]
+      return this.natalChart[index + 12]
     }else if(index < 12) {
-      return this.#fillOrder[index]
+      return this.natalChart[index]
     }else{
-      return this.#fillOrder[index - 12]
+      return this.natalChart[index - 12]
     }
   }
   constructor(ops){
@@ -52,6 +52,7 @@ class Person {
     // 小星
     this.setLucun()
     this.setTianma()
+    this.setHuoxing()
   }
   // 生成农历信息
   generateLunarInfo(){
@@ -167,8 +168,7 @@ class Person {
     // 逆着排
     mainStarsWithZiwei.forEach((star, index) => {
       if(!star) return
-      const dizhi = this.#getFillOrder( zIndex - index )
-      const palace = this.natalChartMap[dizhi]
+      const palace  = this.#getPalace( zIndex - index )
       palace.addMainStar(star)
       this.setStars2Palace(star.code, palace)
     })
@@ -179,8 +179,7 @@ class Person {
     const tIndex = 12 - zIndex
     mainStarsWithTianfu.forEach((star, index) => {
       if(!star) return
-      const dizhi = this.#getFillOrder(tIndex + index)
-      const palace = this.natalChartMap[dizhi]
+      const palace = this.#getPalace(tIndex + index)
       palace.addMainStar(star)
       this.setStars2Palace(star.code, palace)
     })
@@ -194,6 +193,12 @@ class Person {
   setTianma(){
     const palace = this.natalChartMap[tianma[this.dYear]]
     palace.addSmallStar({ name: '天马', code: 'tianma' })
+  }
+  setHuoxing(){
+    const startPalace = this.natalChartMap[huoxing[this.dYear]]
+    const shichenIndex = dizhi.findIndex(dz => dz === this.shichen)
+    const endPalace = this.#getPalace(startPalace.index + shichenIndex)
+    endPalace.addSmallStar({ name: '火星', code: 'huoxing' })
   }
 
 }

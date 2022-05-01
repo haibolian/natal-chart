@@ -102,7 +102,7 @@ export function getShichen(time) {
   if(index > 11) index = 0
 
   return {
-    shichen: dizhi[index] + '时',
+    shichen: dizhi[index],
     index
   }
 }
