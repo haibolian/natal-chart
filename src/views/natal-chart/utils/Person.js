@@ -1,16 +1,32 @@
 import { reactive } from 'vue';
 import { lunar2solar } from '@/utils/date-transform';
-import { tiangan, dizhi, dizhiChart, getShichen, palaceNames, wuxingGame } from '../utils/map';
+import { tiangan,
+  dizhi,
+  dizhiChart,
+  getShichen,
+  palaceNames,
+  wuxingGame,
+  mainStarsWithZiwei,
+  mainStarsWithTianfu
+} from '../utils/map';
 import { getYingongStartTiangan } from '../utils/map';
 import Palace from './Palace';
 class Person {
-   #fillOrder = ['yin', 'mao', 'chen', 'si', 'wu', 'wei', 'shen', 'you', 'xu', 'hai', 'zi', 'chou']
-
+  #fillOrder = ['yin', 'mao', 'chen', 'si', 'wu', 'wei', 'shen', 'you', 'xu', 'hai', 'zi', 'chou']
+  #getFillOrder = function(index){
+    if(index < 0) {
+      return this.#fillOrder[index + 12]
+    }else if(index < 12) {
+      return this.#fillOrder[index]
+    }else{
+      return this.#fillOrder[index - 12]
+    }
+  }
   constructor(ops){
     this.name = ops.name
     this.lunarDate = ops.d
     this.numTime = ops.t
-    this.starsIndex = {}
+    this.stars2Palace = {}
     this.palaces = {}
     this.init()
   }
@@ -23,7 +39,8 @@ class Person {
     this.setBodyPalace()
     this.setOtherPalace()
     this.setWuxingGame()
-    this.setZiweiStars()
+    const zIndex = this.setZiweiStars()
+    this.setTianfuStars(zIndex)
   }
   // 生成农历信息
   generateLunarInfo(){
@@ -104,11 +121,11 @@ class Person {
     this.wuxingGame = dCalcDep[d2Index > 2 ? d2Index - 3 : d2Index]
   }
 
-  setStarsIndex(name, index){
-    this.starsIndex[name] = index
+  setStars2Palace(name, palace){
+    this.stars2Palace[name] = palace
   }
 
-  setZiweiStars(){
+  getZiweiIndex(){
     const { lDay, wuxingGame:{ num } } = this
     let jumpNum = lDay / num
     const isInt = num => Number.isInteger(num)
@@ -124,13 +141,33 @@ class Person {
     }
     const index = jumpNum - 1
     const dizhi = this.#fillOrder[index < 0 ? index + 12 : index]
-    this.natalChartMap[dizhi].addMainStar({
-      name: '紫薇'
+    return { index, dizhi }
+  }
+
+  setZiweiStars(){
+    const { index: zIndex } = this.getZiweiIndex()
+    // 逆着排
+    mainStarsWithZiwei.forEach((star, index) => {
+      if(!star) return
+      const dizhi = this.#getFillOrder( zIndex - index )
+      const palace = this.natalChartMap[dizhi]
+      palace.addMainStar(star)
+      this.setStars2Palace(star.code, palace)
     })
-    this.ziweiIndex = index
+    return zIndex
+  }
+
+  setTianfuStars(zIndex){
+    const tIndex = 12 - zIndex
+    mainStarsWithTianfu.forEach((star, index) => {
+      if(!star) return
+      const dizhi = this.#getFillOrder(tIndex + index)
+      const palace = this.natalChartMap[dizhi]
+      palace.addMainStar(star)
+      this.setStars2Palace(star.code, palace)
+    })
 
   }
-  
 }
 
 export default Person

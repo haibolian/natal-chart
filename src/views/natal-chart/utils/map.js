@@ -38,6 +38,31 @@ export const wuxingGame = [
   { name: '木三局', num: 3 }
 ]
 
+export const mainStarsWithZiwei = [
+  { name: '紫薇', code: 'ziwei' },
+  { name: '天机', code: 'tianji' },
+  null,
+  { name: '太阳', code: 'taiyang' },
+  { name: '武曲', code: 'wuqu' },
+  { name: '天同', code: 'tiantong' },
+  null,
+  null,
+  { name: '廉贞', code: 'lianzhen' }
+]
+
+export const mainStarsWithTianfu = [
+  { name: '天府', code: 'lianzhen' },
+  { name: '太阴', code: 'lianzhen' },
+  { name: '贪狼', code: 'lianzhen' },
+  { name: '巨门', code: 'lianzhen' },
+  { name: '天相', code: 'lianzhen' },
+  { name: '天梁', code: 'lianzhen' },
+  { name: '七杀', code: 'lianzhen' },
+  null, null, null,
+  { name: '破军', code: 'lianzhen' },
+
+]
+
 export function getYingongStartTiangan(year) {
   const endNum = year.toString().charAt(3)
   let name = null
@@ -64,4 +89,6 @@ export function getShichen(time) {
     index
   }
 }
+
+
 

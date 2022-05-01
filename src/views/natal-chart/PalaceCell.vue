@@ -5,6 +5,9 @@
     {{ isFate ? '命宫' : '' }}
     {{ isBody ? '身宫' : '' }}
     {{ name }}
+    <div v-for="(star, index) in mainStars" :key="index">
+     {{ star.name }}
+    </div>
   </div>
 </template>
 
@@ -16,7 +19,8 @@ const props = defineProps({
   tiangan: String,
   isFate: Boolean,
   isBody: Boolean,
-  name: String
+  name: String,
+  mainStars: Array
 })
 </script>
 
