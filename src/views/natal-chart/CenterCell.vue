@@ -7,6 +7,11 @@
   </div>
 </template>
 
+<script>
+export default {
+  inheritAttrs: false
+}
+</script>
 <script setup>
 const props = defineProps({
   name: String,

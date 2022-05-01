@@ -12,18 +12,14 @@
 <script setup>
 import CenterCell from './CenterCell.vue';
 import PalaceCell from './PalaceCell.vue';
-import useNatalChart from './hooks/useNatalChart';
 import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-
-const {
-  natalChart,
-  natalChartMap,
-  initPerson,
-} = useNatalChart
+import Person from './utils/Person';
 
 const route = useRoute()
-const person = initPerson(route.query)
+const person = new Person(route.query)
+
+const { natalChart, natalChartMap } = person
 
 </script>
 
