@@ -67,7 +67,18 @@ export const mainStarsWithZiwei = [
   null,
   { name: '廉贞', code: 'lianzhen' }
 ]
-
+export function getMainStarsWithZiwei(){
+  return [
+  { name: '紫薇', code: 'ziwei' },
+  { name: '天机', code: 'tianji' },
+  null,
+  { name: '太阳', code: 'taiyang' },
+  { name: '武曲', code: 'wuqu' },
+  { name: '天同', code: 'tiantong' },
+  null,
+  null,
+  { name: '廉贞', code: 'lianzhen' }]
+}
 export const mainStarsWithTianfu = [
   { name: '天府', code: 'lianzhen' },
   { name: '太阴', code: 'lianzhen' },
