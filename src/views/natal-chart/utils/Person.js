@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 import { lunar2solar } from '@/utils/date-transform';
-import { tiangan, dizhi, dizhiChart, getShichen, palaceNames } from '../utils/map';
+import { tiangan, dizhi, dizhiChart, getShichen, palaceNames, wuxingGame } from '../utils/map';
 import { getYingongStartTiangan } from '../utils/map';
 import Palace from './Palace';
 class Person {
@@ -10,6 +10,8 @@ class Person {
     this.name = ops.name
     this.lunarDate = ops.d
     this.numTime = ops.t
+    this.starsIndex = {}
+    this.palaces = {}
     this.init()
   }
   init(){
@@ -21,6 +23,7 @@ class Person {
     this.setBodyPalace()
     this.setOtherPalace()
     this.setWuxingGame()
+    this.setZiweiStars()
   }
   // 生成农历信息
   generateLunarInfo(){
@@ -43,7 +46,7 @@ class Person {
     })
     this.natalChartMap = reactive({})
     this.natalChart.forEach( item => {
-      this.natalChartMap[item.code] = item
+      this.natalChartMap[item.dizhiCode] = item
     })
   }
 // 填充天干
@@ -60,7 +63,8 @@ class Person {
     let index = this.lMonth - 1 - this.shichenIndex
     if(index < 0) index = index + 12
     const fate = this.#fillOrder[index]
-    this.natalChartMap[fate].setFatePalace()
+    this.natalChartMap[fate].setFatePalace(index)
+    this.palaces['ming'] = this.natalChartMap[fate]
     this.fatePalaceIndex = index
   }
   // 设置身宫
@@ -68,15 +72,19 @@ class Person {
     let index = this.lMonth - 1 + this.shichenIndex
     if(index > 12) index = index - 12
     const body = this.#fillOrder[index]
-    this.natalChartMap[body].setBodyPalace()
+    this.natalChartMap[body].setBodyPalace(index)
+    this.palaces['shen'] = this.natalChartMap[body]
     this.bodyPalaceIndex = index
   }
   // 设置其他宫位
   setOtherPalace() {
     const fatePalaceIndex = this.fatePalaceIndex
     const otherPalace = [...this.#fillOrder.slice(fatePalaceIndex + 1), ...this.#fillOrder.slice(0, fatePalaceIndex)]
-    otherPalace.forEach((palace, index) => {
-      this.natalChartMap[palace]?.setPalaceName(palaceNames[index])
+    otherPalace.forEach((dizhi, index) => {
+      const palace = palaceNames[index]
+      const palaceIndex = fatePalaceIndex + index + 1
+      this.natalChartMap[dizhi]?.setPalaceName(palace, palaceIndex > 11 ? palaceIndex - 12 : palaceIndex)
+      this.palaces[palace.code] = this.natalChartMap[dizhi]
     })
   }
   // 设置五行局
@@ -85,16 +93,42 @@ class Person {
     const { tiangan: t, dizhi: d } = this.natalChartMap[fatePalaceName]
     const tIndex = tiangan.findIndex(name => t === name)
     const dIndex = dizhi.findIndex( name => d === name )
-    const tCalcDep = ['金四局', '水一局', '火六局', '土五局', '木三局']
     // 根据天干计算到某一个五行局
     const t2Index = parseInt(tIndex / 2)
     // 找出地支所需的剩下的连续三个五行局
-    let dCalcDep = tCalcDep.slice(t2Index, t2Index + 3)
+    let dCalcDep = wuxingGame.slice(t2Index, t2Index + 3)
     const dif = 3 - dCalcDep.length
-    if(dif > 0) dCalcDep = dCalcDep.concat(tCalcDep.slice(0, dif))
+    if(dif > 0) dCalcDep = dCalcDep.concat(wuxingGame.slice(0, dif))
     let d2Index = parseInt(dIndex / 2)
 
     this.wuxingGame = dCalcDep[d2Index > 2 ? d2Index - 3 : d2Index]
+  }
+
+  setStarsIndex(name, index){
+    this.starsIndex[name] = index
+  }
+
+  setZiweiStars(){
+    const { lDay, wuxingGame:{ num } } = this
+    let jumpNum = lDay / num
+    const isInt = num => Number.isInteger(num)
+    const isEvenNum = num => num % 2 === 0
+    if(!isInt(jumpNum)){
+      let r = 1
+      let s = jumpNum
+      while (!isInt(s)) {
+        r * num < lDay ? r++ : s = r * num
+      }
+      const lend = s - lDay
+      jumpNum = isEvenNum(lend) ? r + lend : r - lend
+    }
+    const index = jumpNum - 1
+    const dizhi = this.#fillOrder[index < 0 ? index + 12 : index]
+    this.natalChartMap[dizhi].addMainStar({
+      name: '紫薇'
+    })
+    this.ziweiIndex = index
+
   }
   
 }

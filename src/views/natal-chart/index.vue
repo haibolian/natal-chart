@@ -3,7 +3,7 @@
     <div class="natal-chart__body">
       <template v-for="palace in natalChart" key="palace.code">
         <PalaceCell v-bind="palace" />
-        <CenterCell v-bind="person" v-if="palace.code == 'chen'"/>
+        <CenterCell v-bind="person" v-if="palace.dizhiCode == 'chen'"/>
       </template>
     </div>
   </div>

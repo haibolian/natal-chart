@@ -16,9 +16,27 @@ export const dizhiChart = [
   { dizhi: '亥', code: 'hai' }
 ]
 
-export const palaceNames = ['父母宫', '福德', '田宅', '官禄', '朋友宫', '迁移', '疾厄', '财帛', '子女', '夫妻', '兄弟']
+export const palaceNames = [
+  { name: '父母', code: 'fumu' },
+  { name: '福德', code: 'fude' },
+  { name: '田宅', code: 'tianzhai' },
+  { name: '官禄', code: 'guanlu' },
+  { name: '朋友', code: 'pengyou' },
+  { name: '迁移', code: 'qianyi' },
+  { name: '疾厄', code: 'jie' },
+  { name: '财帛', code: 'caibo' },
+  { name: '子女', code: 'zinv' },
+  { name: '夫妻', code: 'fuqi' },
+  { name: '兄弟', code: 'xiongdi' }
+]
 
-export const wuxingGame = []
+export const wuxingGame = [
+  { name: '金四局', num: 4 },
+  { name: '水一局', num: 1 },
+  { name: '火六局', num: 6 },
+  { name: '土五局', num: 5 },
+  { name: '木三局', num: 3 }
+]
 
 export function getYingongStartTiangan(year) {
   const endNum = year.toString().charAt(3)
