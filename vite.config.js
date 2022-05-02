@@ -4,8 +4,10 @@ import vue from '@vitejs/plugin-vue'
 import styleImport, { VantResolve } from 'vite-plugin-style-import';
 
 export default defineConfig({
-  alias: {
-    "@": resolve(__dirname, 'src')
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, 'src')
+    },
   },
   plugins: [
     vue(),
