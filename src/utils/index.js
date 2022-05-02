@@ -3,7 +3,7 @@
  */
 export function formatDate(date = new Date(), dateSeparator = '-', timeSeparator = ':'){
   const y = date.getFullYear()
-  const m = date.getMonth()
+  const m = date.getMonth() + 1
   const d = date.getDate()
   
   const h = date.getHours()

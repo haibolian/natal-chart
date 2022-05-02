@@ -60,7 +60,7 @@ const generateNatalChart = (isLunar)=>{
     const d = lunar.getDate()
     const { lYear, lMonth, lDay } = solar2lunar(y, m, d); 
     lunar.setFullYear(lYear)
-    lunar.setMonth(lMonth)
+    lunar.setMonth(lMonth - 1)
     lunar.setDate(lDay)
   }
   const formatedDate = formatDate(lunar, '-', ':')
