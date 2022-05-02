@@ -109,16 +109,18 @@ const props = defineProps({
   }
   .palace-name {
     width: 2rem;
+    font-size: .8rem;
     background-color:rgb(0, 133, 205);
     border-radius: 4px;
     color: #fff;
-    bottom: 0;
+    bottom: .1rem;
     left: 50%;
     transform: translateX(-50%);
   }
   .tiangan-dizhi {
     bottom: 0;
     right: 0;
+    font-size: .8rem;
     font-weight: bold;
   }
 </style>
