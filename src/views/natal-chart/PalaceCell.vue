@@ -69,6 +69,7 @@ const props = defineProps({
 
 <style>
   .natal-chart__palace {
+    padding-top: .2rem;
     font-size: 1rem;
     background-color: #fff;
     box-sizing: border-box;
@@ -108,8 +109,8 @@ const props = defineProps({
     position: absolute;
   }
   .palace-name {
-    width: 2rem;
-    font-size: .8rem;
+    width: 3rem;
+    /* font-size: 1rem; */
     background-color:rgb(0, 133, 205);
     border-radius: 4px;
     color: #fff;
@@ -120,7 +121,7 @@ const props = defineProps({
   .tiangan-dizhi {
     bottom: 0;
     right: 0;
-    font-size: .8rem;
-    font-weight: bold;
+    font-size: 1.1rem;
+    /* font-weight: bold; */
   }
 </style>

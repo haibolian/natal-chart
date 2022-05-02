@@ -8,7 +8,9 @@ import {
   Dialog,
   Toast,
   Grid,
-  GridItem
+  GridItem,
+  Row,
+  Col
 } from "vant"
 
 function install(){
@@ -22,6 +24,8 @@ function install(){
   this.use(Toast)
   this.use(Grid)
   this.use(GridItem)
+  this.use(Row)
+  this.use(Col)
 
 }
 

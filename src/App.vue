@@ -15,4 +15,7 @@
   height: 100vh;
   background-color: #f7f8fa;
 }
+html {
+  font-size: 11px;
+}
 </style>
