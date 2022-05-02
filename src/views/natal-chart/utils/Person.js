@@ -19,15 +19,6 @@ import { getYingongStartTiangan } from '../utils/map';
 import Palace from './Palace';
 class Person {
   #fillOrder = ['yin', 'mao', 'chen', 'si', 'wu', 'wei', 'shen', 'you', 'xu', 'hai', 'zi', 'chou']
-  #getPalace = function(index){
-    if(index < 0) {
-      return this.natalChart[index + 12]
-    }else if(index < 12) {
-      return this.natalChart[index]
-    }else{
-      return this.natalChart[index - 12]
-    }
-  }
   constructor(ops){
     this.name = ops.name
     this.lunarDate = ops.d
@@ -35,6 +26,15 @@ class Person {
     this.stars2Palace = {}
     this.palaces = {}
     this.init()
+  }
+  getPalace(index){
+    if(index < 0) {
+      return this.natalChart[index + 12]
+    }else if(index < 12) {
+      return this.natalChart[index]
+    }else{
+      return this.natalChart[index - 12]
+    }
   }
   init(){
     this.generateLunarInfo()
@@ -165,7 +165,7 @@ class Person {
     // 逆着排
     stars?.forEach((star, index) => {
       if(!star) return
-      const palace  = this.#getPalace( zIndex - index )
+      const palace  = this.getPalace( zIndex - index )
       palace.addMainStar(star)
       this.setStars2Palace(star.code, palace)
     })
@@ -177,7 +177,7 @@ class Person {
     const stars = getMainStarsWithTianfu(this)
     stars?.forEach((star, index) => {
       if(!star) return
-      const palace = this.#getPalace(tIndex + index)
+      const palace = this.getPalace(tIndex + index)
       palace.addMainStar(star)
       this.setStars2Palace(star.code, palace)
     })
@@ -200,7 +200,7 @@ class Person {
     // 到达目标地支的索引
     const scIndex = newArr.findIndex(dz => dz === endDizhi)
     // 根据起始宫的位置顺逆到达目标宫
-    const endPalace = this.#getPalace(direction ? startPalace.index + scIndex : startPalace.index - scIndex)
+    const endPalace = this.getPalace(direction ? startPalace.index + scIndex : startPalace.index - scIndex)
     return endPalace
   }
   setOtherRegularSmallStars(){

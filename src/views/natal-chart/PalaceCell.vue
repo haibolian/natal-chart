@@ -1,5 +1,6 @@
 <template>
-  <div 
+  <div
+    ref="pref"
     :class="`natal-chart__palace natal-chart__palace__${ dizhiCode }`"
     :style="{ gridArea: dizhiCode }"
   >
@@ -29,20 +30,6 @@
         {{ tiangan + dizhi }}
       </div>
     </div>
-    <!-- {{ tiangan }}
-    {{ dizhi }}
-    {{ isFate ? '命宫' : '' }}
-    {{ isBody ? '身宫' : '' }}
-    {{ name }}
-    <span v-for="(star, index) in mainStars" :key="index">
-     {{ star.name }}
-    </span>
-    <span v-for="(star, index) in subStars" :key="star">
-    {{ star.name }}
-    </span>
-    <span v-for="(star, index) in smallStars" :key="star">
-      {{ star.name }}
-    </span> -->
   </div>
 </template>
 
@@ -52,7 +39,7 @@ export default {
 }
 </script>
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive, onMounted, inject } from 'vue';
 const props = defineProps({
   dizhiCode: String,
   code: String,
@@ -65,6 +52,12 @@ const props = defineProps({
   subStars: Array,
   smallStars: Array
 })
+
+const pref = ref(null)
+const { pRefs, addRef } = inject('prefs')
+addRef(props.dizhiCode, pref)
+
+
 </script>
 
 <style>
