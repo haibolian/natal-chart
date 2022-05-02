@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "vite build --base=/natal-chart/",
     "preview": "vite preview"
   },
   "dependencies": {
