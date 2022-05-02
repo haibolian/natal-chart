@@ -13,9 +13,7 @@ import {
   getDizhiCode
 } from '../utils/map';
 import {
-  lucunRule,
-  tianma,
-  huoxing
+  getSmallStarsConfig
 } from './rules';
 import { getYingongStartTiangan } from '../utils/map';
 import Palace from './Palace';
@@ -50,9 +48,7 @@ class Person {
     const zIndex = this.setZiweiStars()
     this.setTianfuStars(zIndex)
     // 小星
-    this.setLucun()
-    this.setTianma()
-    this.setHuoxing()
+    this.setOtherRegularSmallStars()
   }
   // 生成农历信息
   generateLunarInfo(){
@@ -184,42 +180,40 @@ class Person {
       this.setStars2Palace(star.code, palace)
     })
   }
-  setLucun(){
-    const palace = this.natalChartMap[lucunRule[this.tYear]]
-    palace.addSmallStar({ name: '禄存', code: 'lucun' })
-    palace.next.addSmallStar({ name: '擎羊', code: 'qingyang' })
-    palace.prev.addSmallStar({ name: '陀罗', code: 'tuoluo' })
-  }
-  setTianma(){
-    const palace = this.natalChartMap[tianma[this.dYear]]
-    palace.addSmallStar({ name: '天马', code: 'tianma' })
-  }
   /**
    * 
-   * @param { String } startPalaceCode 哪个地支开始
-   * @param { String } shichen 从什么开始
-   * @param { Boolean } direction 顺 / 逆 时针
-   * @param { String } targetShichen 到什么
+   * @param { String } startPalaceCode 哪个地支开始 (汉字拼音)
+   * @param { String } shichen 从什么开始 (汉字)
+   * @param { Boolean } direction 顺 / 逆 时针。 true： 顺， false：逆
+   * @param { String } targetShichen 到什么 (汉字)
    * @returns { Palace } 返回目标宫位
    * @example 亥起子时，逆时针到生时
-   * @todo 顺逆
    */
-  getMovePalace(startPalaceCode, shichen, direction, targetShichen){
+  getMovePalace(startPalaceCode, startDizhi, direction, endDizhi){
+    // 获取起始宫
     const startPalace = this.natalChartMap[startPalaceCode]
-    const shichenIndex = dizhi.findIndex(dz => dz === shichen)
+    // 获取从那个地支开始的数组
+    const shichenIndex = dizhi.findIndex(dz => dz === startDizhi)
     const newArr = [ ...dizhi.slice(shichenIndex), ...dizhi.slice(0, shichenIndex) ]
-    const scIndex = newArr.findIndex(dz => dz === targetShichen)
-    const endPalace = this.#getPalace(startPalace.index + scIndex)
+    // 到达目标地支的索引
+    const scIndex = newArr.findIndex(dz => dz === endDizhi)
+    // 根据起始宫的位置顺逆到达目标宫
+    const endPalace = this.#getPalace(direction ? startPalace.index + scIndex : startPalace.index - scIndex)
     return endPalace
   }
-  setHuoxing(){
-    const palace = this.getMovePalace(huoxing[this.dYear], '子', true, this.shichen)
-    palace.addSmallStar({ name: '火星', code: 'huoxing' })
-    // const startPalace = this.natalChartMap[huoxing[this.dYear]]
-    // const shichenIndex = dizhi.findIndex(dz => dz === this.shichen)
-    // const endPalace = this.#getPalace(startPalace.index + shichenIndex)
-  }
+  setOtherRegularSmallStars(){
+    const smallStarsConfig = getSmallStarsConfig(this)
+    smallStarsConfig.forEach(config => {
+      if(!config) return
+      const palace = 
+        typeof config.rule === 'string' 
+        ? this.natalChartMap[config.rule]
+        : this.getMovePalace(...config.rule);
+      palace.addSmallStar(config.star);
 
+      config.cb && config.cb(palace)
+    })
+  }
 }
 
 export default Person

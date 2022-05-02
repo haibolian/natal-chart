@@ -8,12 +8,12 @@
     {{ isFate ? '命宫' : '' }}
     {{ isBody ? '身宫' : '' }}
     {{ name }}
-    <div v-for="(star, index) in mainStars" :key="index">
+    <span v-for="(star, index) in mainStars" :key="index">
      {{ star.name }}
-    </div>
-    <div v-for="(star, index) in smallStars" :key="index">
+    </span>
+    <span v-for="(star, index) in smallStars" :key="index">
       {{ star.name }}
-    </div>
+    </span>
   </div>
 </template>
 
