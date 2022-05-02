@@ -1,4 +1,4 @@
-import { dizhi } from './map';
+import { dizhi, sihuaMap } from './map';
 
 export const lucunRule = {
   jia: 'yin',
@@ -72,9 +72,26 @@ export const xianchi = {
   wei: 'zi'
 }
 
+// t == true ? 天魁 ： 天钺
+export function getTiankuiTianyue(t) {
+  const r1 = t ? 'chou' : 'wei'
+  const r2 = t ? 'zi' : 'shen'
+  const r3 = t ? 'hai' : 'you'
+  const r4 = t ? 'yin' : 'wu'
+  const r5 = t ? 'mao' : 'si'
+  return {
+    jia: r1, wu: r1, geng: r1,
+    yi: r2, ji: r2,
+    bing: r3, ding: r3,
+    xin: r4,
+    ren: r5, gui: r5
+  }
+}
+
 export function getSmallStarsConfig(person){
   return [
     {
+      isSub: 1,
       rule: lucunRule[person.tYear],
       star: { name: '禄存', code: 'lucun' },
       cb(palace){
@@ -121,6 +138,36 @@ export function getSmallStarsConfig(person){
     {
       rule: ['you', '子', true, dizhi[person.lMonth - 1]],
       star: { name: '天刑', code: 'tianxing' }
+    },
+    {
+      isSub: 1,
+      rule: ['chen', '子', true, dizhi[person.lMonth - 1]],
+      star: { name: '左辅', code: 'zuofu', sihua: sihuaMap[person.tYear]['zuofu'] }
+    },
+    {
+      isSub: 1,
+      rule: ['xu', '子', false, dizhi[person.lMonth - 1]],
+      star: { name: '右弼', code: 'youbi', sihua: sihuaMap[person.tYear]['youbi'] }
+    },
+    {
+      isSub: 1,
+      rule: ['chen', '子', true, person.shichen],
+      star: { name: '文曲', code: 'wenqu', sihua: sihuaMap[person.tYear]['wenqu'] }
+    },
+    {
+      isSub: 1,
+      rule: ['xu', '子', false, person.shichen],
+      star: { name: '文昌', code: 'wenchang', sihua: sihuaMap[person.tYear]['wenchang'] }
+    },
+    {
+      isSub: 1,
+      rule: getTiankuiTianyue(true)[person.tYear],
+      star: { name: '天魁', code: 'tiankui' }
+    },
+    {
+      isSub: 1,
+      rule: getTiankuiTianyue()[person.tYear],
+      star: { name: '天钺', code: 'tianyue' }
     }
   ]
 } 

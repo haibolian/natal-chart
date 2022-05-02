@@ -7,8 +7,8 @@ import {
   getShichen,
   palaceNames,
   wuxingGame,
-  mainStarsWithZiwei,
-  mainStarsWithTianfu,
+  getMainStarsWithZiwei,
+  getMainStarsWithTianfu,
   getTianganCode,
   getDizhiCode
 } from '../utils/map';
@@ -161,8 +161,9 @@ class Person {
 
   setZiweiStars(){
     const { index: zIndex } = this.getZiweiIndex()
+    const stars = getMainStarsWithZiwei(this)
     // 逆着排
-    mainStarsWithZiwei.forEach((star, index) => {
+    stars?.forEach((star, index) => {
       if(!star) return
       const palace  = this.#getPalace( zIndex - index )
       palace.addMainStar(star)
@@ -173,7 +174,8 @@ class Person {
 
   setTianfuStars(zIndex){
     const tIndex = 12 - zIndex
-    mainStarsWithTianfu.forEach((star, index) => {
+    const stars = getMainStarsWithTianfu(this)
+    stars?.forEach((star, index) => {
       if(!star) return
       const palace = this.#getPalace(tIndex + index)
       palace.addMainStar(star)
@@ -209,7 +211,10 @@ class Person {
         typeof config.rule === 'string' 
         ? this.natalChartMap[config.rule]
         : this.getMovePalace(...config.rule);
-      palace.addSmallStar(config.star);
+
+      config.isSub 
+        ? palace.addSubStar(config.star) 
+        : palace.addSmallStar(config.star);
 
       config.cb && config.cb(palace)
     })
