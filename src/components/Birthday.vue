@@ -37,7 +37,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 
-const selectedDate = ref(new Date(1996,0,7))
+const selectedDate = ref(new Date(2022,1,1))
 const birthday = ref('')
 const name = ref('')
 const minDate = new Date(1900, 1, 1)
