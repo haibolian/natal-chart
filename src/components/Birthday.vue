@@ -33,6 +33,7 @@
 import { solar2lunar } from '@/utils/date-transform';
 import { formatDate } from '@/utils/index';
 import { Dialog } from 'vant';
+import 'vant/es/dialog/index.css';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 

@@ -178,7 +178,7 @@ class Person {
     stars?.forEach((star, index) => {
       if(!star) return
       const palace = this.getPalace(tIndex + index)
-      palace.addMainStar(star)
+      palace?.addMainStar(star)
       this.setStars2Palace(star.code, palace)
     })
   }

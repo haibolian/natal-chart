@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
-import styleImport, { VantResolve } from 'vite-plugin-style-import';
+import Components from 'unplugin-vue-components/vite';
+import { VantResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineConfig({
   resolve: {
@@ -11,8 +12,8 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    styleImport({
-      resolves: [VantResolve()],
+    Components({
+      resolvers: [VantResolver()],
     }),
   ]
 })
