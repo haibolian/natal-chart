@@ -3,6 +3,7 @@
     ref="pref"
     :class="`natal-chart__palace natal-chart__palace__${ dizhiCode }`"
     :style="{ gridArea: dizhiCode }"
+    @click="(e) => onClick(e)"
   >
     <div class="palace-stars">
       <div class="palace-star palace-star__main" v-for="star in mainStars" :key="star.code">
@@ -39,7 +40,7 @@ export default {
 }
 </script>
 <script setup>
-import { ref, reactive, onMounted, inject } from 'vue';
+import { ref, reactive, onMounted, defineEmits, inject } from 'vue';
 const props = defineProps({
   dizhiCode: String,
   code: String,
@@ -57,11 +58,17 @@ const pref = ref(null)
 const { pRefs, addRef } = inject('prefs')
 addRef(props.dizhiCode, pref)
 
-
+const emits = defineEmits(['click'])
+const onClick = (e) => {
+  
+  emits('click', e)
+}
 </script>
 
 <style>
   .natal-chart__palace {
+    position: relative;
+    z-index: 9;
     padding-top: .2rem;
     font-size: 1rem;
     background-color: #fff;

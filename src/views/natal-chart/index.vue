@@ -2,7 +2,7 @@
   <div class="natal-chart">
     <div class="natal-chart__body" ref="natalChartDom">
       <template v-for="palace in natalChart" key="palace.code">
-        <PalaceCell v-bind="palace" />
+        <PalaceCell v-bind="palace" @click="() => onClickPalaceCell(palace.index)"/>
         <CenterCell v-bind="person" v-if="palace.dizhiCode == 'chen'"/>
       </template>
       <div class="canvas-wapper" v-if="natalChartDom">
@@ -35,12 +35,16 @@ provide('prefs', {
   }
 })
 
-const drawSanfangSizheng = ()=>{
-  const { fatePalaceIndex } = person
-  const startDz = person.getPalace(fatePalaceIndex)?.dizhiCode
-  const leftDz = person.getPalace(fatePalaceIndex - 4)?.dizhiCode
-  const rightDz = person.getPalace(fatePalaceIndex + 4)?.dizhiCode
-  const faceDz = person.getPalace(fatePalaceIndex + 6)?.dizhiCode
+const onClickPalaceCell = (index) => {
+  drawSanfangSizheng(index)
+}
+
+const drawSanfangSizheng = (palaceIndex)=>{
+  // const { fatePalaceIndex } = person
+  const startDz = person.getPalace(palaceIndex)?.dizhiCode
+  const leftDz = person.getPalace(palaceIndex - 4)?.dizhiCode
+  const rightDz = person.getPalace(palaceIndex + 4)?.dizhiCode
+  const faceDz = person.getPalace(palaceIndex + 6)?.dizhiCode
   const startPoint = getPoint(startDz)
   const leftPoint = getPoint(leftDz)
   const rightPoint = getPoint(rightDz)
@@ -110,6 +114,7 @@ const draw = (sp, lp, rp, fp) => {
   const canvas = document.getElementById('sanfang')
   if (!canvas.getContext) return;
   const ctx = canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width, canvas.height)
   ctx.strokeStyle = 'pink'
   ctx.setLineDash([5, 10]);  // [实线长度, 间隙长度]
   ctx.beginPath();
@@ -127,7 +132,7 @@ const draw = (sp, lp, rp, fp) => {
 }
 watch(natalChartDom, ()=>{
   nextTick(()=>{
-    drawSanfangSizheng()
+    drawSanfangSizheng(person.fatePalaceIndex)
   })
 })
 
@@ -138,6 +143,8 @@ watch(natalChartDom, ()=>{
   
 }
 .canvas-wapper{
+  z-index: 1;
+  position: relative;
   position: absolute;
   width: 100%;
   height: 100%;
